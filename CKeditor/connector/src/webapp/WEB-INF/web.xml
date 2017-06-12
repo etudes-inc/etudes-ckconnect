@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app id="WebApp_9" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <display-name>CKeditor file connector</display-name>
+  <servlet>
+  		<servlet-name>CKConnector</servlet-name>
+  		<servlet-class>org.sakaiproject.connector.ck.CKConnectorServlet</servlet-class>
+  		<init-param>
+  			<param-name>XMLConfig</param-name>
+  			<param-value>/WEB-INF/config.xml</param-value>
+  		</init-param>
+  		<init-param>
+  			<param-name>debug</param-name>
+  			<param-value>false</param-value>
+  		</init-param>
+  		<load-on-startup>0</load-on-startup>
+  	</servlet>
+  	
+    <filter>
+        <filter-name>sakai.request</filter-name>
+        <filter-class>org.sakaiproject.util.RequestFilter</filter-class>
+        <init-param>
+            <param-name>upload.enabled</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>sakai.request</filter-name>
+        <servlet-name>CKConnector</servlet-name>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+    </filter-mapping>
+
+  
+    <servlet-mapping>
+        <servlet-name>CKConnector</servlet-name>
+        <url-pattern>/web/editor/filemanager/browser/default/connectors/jsp/connector/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CKConnector</servlet-name>
+        <url-pattern>/filemanager/connector/*</url-pattern>
+    </servlet-mapping>
+
+</web-app>
